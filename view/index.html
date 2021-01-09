@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>#title#</title>
+</head>
+
+<body>
+  <form id="create_short_url">
+    <label for="url">Ссылка</label>
+    <input type="text" id="url" name="url">
+    <button type="submit">Сократить</button>
+  </form>
+  <p>Сокращенная ссылка: <strong id="short_url"></strong></p>
+  <pre id="response"></pre>
+  <script>
+    const create_short_url = document.getElementById("create_short_url");
+    create_short_url.addEventListener("submit", async (ev) => {
+      ev.preventDefault()
+      let json = null;
+      const url = document.getElementById("url").value;
+      const response = await fetch("/api/create", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({url})
+      })
+      if (response.ok) {
+        json = await response.json();
+        document.getElementById("response").innerHTML = JSON.stringify(json);
+        if (json.type != "error") {
+          document.getElementById("short_url").innerHTML = json.message
+        }
+      } else {
+        alert("Ошибка HTTP: " + response.status);
+        json = await response.json();
+        document.getElementById("response").innerHTML = JSON.stringify(json);
+      }
+    }) 
+  </script>
+</body>
+
+</html>

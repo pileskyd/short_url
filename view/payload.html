@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="30; URL=#message#" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>#title#</title>
+</head>
+<body>
+  <h1>Скоро перенаправят, подождите <strong id="timer">30</strong> секунд :)</h1>
+  <h2>#message#</h2>
+  <script>
+    const timer = document.getElementById("timer")
+    const i = setInterval(() => {
+      timer.innerHTML = parseInt(timer.innerHTML) - 1
+    }, 1000)
+  </script>
+</body>
+</html>
